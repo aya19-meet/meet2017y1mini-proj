@@ -54,23 +54,19 @@ LEFT_EDGE=-400
 def up ():
     global direction
     direction=UP
-    move_snake()
     print('you pressed up')
 def down():
     global direction
     direction=DOWN
-    move_snake()
     print('you pressed down')
 
 def left():
     global direction
     direction=LEFT
-    move_snake()
     print('you pressed left')
 def right():
     global direction
     direction=RIGHT
-    move_snake()
     print('you pressed right')
 
 turtle.onkeypress(up,UP_ARROW)
@@ -79,6 +75,16 @@ turtle.onkeypress(left,LEFT_ARROW)
 turtle.onkeypress(right,RIGHT_ARROW)
 
 turtle.listen()
+def make_food():
+    min_x=-int(SIZE_x/2/SQUARE_SIZE)+1
+    max_x=int(SIZE_X/2/SQUARE_sIZE)-1
+    min_y=-int(SIZE_Y/2/SQUARE_SIZE)-1
+    max_y=int(SIZE_Y/2/SQUARE_SIZE_+1
+    food_x=random.randint(min_x,max_x)*SQUARE_SIZE
+    food_y=random.randint(min_y,max_y)*SQUARE_SIZE
+    food.goto(food_x,food_y)
+    
+              
 
 def move_snake():
     my_pos=snake.pos()
@@ -102,6 +108,14 @@ def move_snake():
     pos_list.append(my_pos)
     new_stamp=snake.stamp()
     stamp_list.append(new_stamp)
+
+    global food_stamps,food_pos
+    if snake.pos() in food_pos:
+        food_ind=food_pos.index(snake.pos())
+        food.clearstamp(food_stamps[food_ind])
+        food_pos.pop(food_ind)
+        food_stamps.pop(food_ind)
+        print('fooooooooodddddd')
     old_stamp=stamp_list.pop(0)
     snake.clearstamp(old_stamp)
     pos_list.pop(0)
@@ -121,11 +135,24 @@ def move_snake():
     elif new_y_pos <= DOWN_EDGE:
         print('YOU ARE AND IDIOT,YOU LOST D')
         quit()
+
+    TIME_STEP=100
+    turtle.ontimer(move_snake,TIME_STEP)
         
         
 
 
-    
-    
+move_snake()
+food=turtle.clone()
+food.shape('turtle')
+food_pos=[(100,100),(-100,100),(-100,-100),(100,-100)]
+food_stamps=[]
+food.hideturtle()
+
+for this_food_pos in food_pos:
+    food.goto(this_food_pos)
+    my_food_stamp=food.stamp()
+    food_stamps.append(my_food_stamp)
+
 turtle.mainloop()
 
