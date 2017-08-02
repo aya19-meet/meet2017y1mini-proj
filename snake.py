@@ -10,7 +10,7 @@ turtle.setup(SIZE_X,SIZE_Y)
 turtle.penup()
 
 SQUARE_SIZE=20
-START_LENGTH=6
+START_LENGTH=8
 
 pos_list=[]
 stamp_list=[]
@@ -76,15 +76,19 @@ turtle.onkeypress(right,RIGHT_ARROW)
 
 turtle.listen()
 def make_food():
-    min_x=-int(SIZE_x/2/SQUARE_SIZE)+1
-    max_x=int(SIZE_X/2/SQUARE_sIZE)-1
+    min_x=-int(SIZE_X/2/SQUARE_SIZE)+1
+    max_x=int(SIZE_X/2/SQUARE_SIZE)-1
     min_y=-int(SIZE_Y/2/SQUARE_SIZE)-1
-    max_y=int(SIZE_Y/2/SQUARE_SIZE_+1
+    max_y=int(SIZE_Y/2/SQUARE_SIZE)+1
     food_x=random.randint(min_x,max_x)*SQUARE_SIZE
     food_y=random.randint(min_y,max_y)*SQUARE_SIZE
+
     food.goto(food_x,food_y)
-    
-              
+    food_pos.append((food_x,food_y))
+    foodstampss=food.stamp()
+    food_stamps.append(foodstampss)
+        
+                  
 
 def move_snake():
     my_pos=snake.pos()
@@ -116,6 +120,7 @@ def move_snake():
         food_pos.pop(food_ind)
         food_stamps.pop(food_ind)
         print('fooooooooodddddd')
+        make_food()
     old_stamp=stamp_list.pop(0)
     snake.clearstamp(old_stamp)
     pos_list.pop(0)
@@ -138,7 +143,7 @@ def move_snake():
 
     TIME_STEP=100
     turtle.ontimer(move_snake,TIME_STEP)
-        
+    
         
 
 
