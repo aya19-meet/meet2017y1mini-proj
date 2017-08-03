@@ -3,6 +3,9 @@ import random
 
 turtle.tracer(1,0)
 
+
+
+
 SIZE_X=800
 SIZE_Y=500
 turtle.setup(SIZE_X,SIZE_Y)
@@ -10,7 +13,7 @@ turtle.setup(SIZE_X,SIZE_Y)
 turtle.penup()
 
 SQUARE_SIZE=20
-START_LENGTH=8
+START_LENGTH=1
 
 pos_list=[]
 stamp_list=[]
@@ -21,7 +24,7 @@ snake=turtle.clone()
 snake.shape('square')
 
 turtle.hideturtle()
-
+#THE SNAKE'S BODY
 for i in range(START_LENGTH):
     x_pos=snake.pos()[0]
     y_pos=snake.pos()[1]
@@ -34,7 +37,7 @@ for i in range(START_LENGTH):
 
     stamp1=snake.stamp()
     stamp_list.append(stamp1)
-
+#SNAKE'S MOVEMENT
 UP_ARROW='Up'
 LEFT_ARROW='Left'
 DOWN_ARROW='Down'
@@ -75,11 +78,12 @@ turtle.onkeypress(left,LEFT_ARROW)
 turtle.onkeypress(right,RIGHT_ARROW)
 
 turtle.listen()
+#make random food pop up
 def make_food():
     min_x=-int(SIZE_X/2/SQUARE_SIZE)+1
     max_x=int(SIZE_X/2/SQUARE_SIZE)-1
-    min_y=-int(SIZE_Y/2/SQUARE_SIZE)-1
-    max_y=int(SIZE_Y/2/SQUARE_SIZE)+1
+    min_y=-int(SIZE_Y/2/SQUARE_SIZE)+1
+    max_y=int(SIZE_Y/2/SQUARE_SIZE)-1
     food_x=random.randint(min_x,max_x)*SQUARE_SIZE
     food_y=random.randint(min_y,max_y)*SQUARE_SIZE
 
@@ -88,12 +92,15 @@ def make_food():
     foodstampss=food.stamp()
     food_stamps.append(foodstampss)
         
-                  
+#IDK SNAKE MOVEMENTS PART 2 I GUESS                 
 
 def move_snake():
     my_pos=snake.pos()
     x_pos=my_pos[0]
     y_pos=my_pos[1]
+    if snake.pos() in pos_list[0:-1]:
+        print('you committed suicide')
+        quit()
 
     if direction==RIGHT:
         snake.goto(x_pos+SQUARE_SIZE,y_pos)
@@ -120,10 +127,15 @@ def move_snake():
         food_pos.pop(food_ind)
         food_stamps.pop(food_ind)
         print('fooooooooodddddd')
+        print(len(pos_list))
         make_food()
-    old_stamp=stamp_list.pop(0)
-    snake.clearstamp(old_stamp)
-    pos_list.pop(0)
+    else:
+        old_stamp=stamp_list.pop(0)
+        snake.clearstamp(old_stamp)
+        pos_list.pop(0)
+    
+    
+    
     new_pos=snake.pos()
     new_x_pos=new_pos[0]
     new_y_pos=new_pos[1]
@@ -158,6 +170,14 @@ for this_food_pos in food_pos:
     food.goto(this_food_pos)
     my_food_stamp=food.stamp()
     food_stamps.append(my_food_stamp)
+#THE EDGES OF THE GAME(BORDERS)
+turtle.goto(-400,250)
+turtle.pendown()
+turtle.goto(400,250)
+turtle.goto(400,-250)
+turtle.goto(-400,-250)
+turtle.goto(-400,250)
+
 
 turtle.mainloop()
 
