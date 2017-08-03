@@ -162,7 +162,7 @@ def move_snake():
 move_snake()
 food=turtle.clone()
 food.shape('turtle')
-food_pos=[(100,100),(-100,100),(-100,-100),(100,-100)]
+food_pos=[(100,100),(-100,-100)]
 food_stamps=[]
 food.hideturtle()
 
